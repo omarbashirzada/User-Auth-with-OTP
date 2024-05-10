@@ -1,0 +1,33 @@
+version: '3'
+services:
+  database:
+    hostname: otp_db_mysql
+    image: mysql
+    restart: always
+    environment:
+      MYSQL_USER: otp_admin
+      MYSQL_PASSWORD: otp_1517
+      MYSQL_ROOT_PASSWORD: otp_root_1517
+      MYSQL_DATABASE: OTP_SERVICE_DB
+    ports:
+      - '3309:3306'
+    volumes:
+      - dbOtp:/var/lib/mysql
+    networks:
+      - otp_network
+
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - "9094:8080"
+    depends_on:
+      - database
+    networks:
+      - otp_network
+
+volumes:
+  dbOtp:
+
+networks:
+  otp_network:
